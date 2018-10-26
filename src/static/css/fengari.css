@@ -1,0 +1,40 @@
+@font-face {
+    font-family: 'profontwindowsregular';
+    src: url('ProFontWindows-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Libre Franklin', sans-serif;
+    margin: 0;
+    background-color: #ebf1fa;
+    color: #444;
+}
+
+pre, code, .quoted, #fengari-input, #fengari-prompt {
+    font-family: 'profontwindowsregular';
+    font-size: 13px;
+}
+
+h1, h2, h3, h4 {
+    font-weight: 100;
+    font-style: italic;
+}
+
+a {
+    color: inherit;
+}
+
+li {
+    margin: 0 0 10px;
+}
+
+.center {
+    text-align: center;
+}
+
+.repl {
+    box-shadow: 0 0 40px #444;
+}
+

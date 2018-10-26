@@ -1,0 +1,13 @@
+{
+  "name": "fengari-repl",
+  "version": "1.0.0",
+  "main": "src/main.js",
+  "repository": "https://github.com/giann/fengari-repl.git",
+  "author": "Benoit Giannangeli <giann008@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "fengari": "^0.1.2",
+    "fengari-interop": "^0.1.2",
+    "fengari-web": "^0.1.2"
+  }
+}

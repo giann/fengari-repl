@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1,  maximum-scale=1,  minimum-scale=1, user-scalable=no">
+    <title>Fengari</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Libre+Franklin:300,300i,400,400i,600,600i" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="static/css/fengari.css?v=1">
+
+    <link rel="stylesheet" type="text/css" href="static/css/github.css?v=1">
+    <link rel="stylesheet" type="text/css" href="static/css/repl.css?v=1">
+</head>
+
+<body>
+
+    <section class="section--standalone">
+        <div class="repl">
+            <code id="fengari-console"></code>
+            <div class="fengari-input-container">
+                <label id="fengari-prompt" for="fengari-input">→ </label>
+                <textarea class="lua" id="fengari-input" rows="1" placeholder="Type some Lua here..."></textarea>
+            </div>
+        </div>
+    </section>
+
+    <script src="../node_modules/fengari-web/dist/fengari-web.js" type="text/javascript"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.4.0/languages/lua.min.js"></script>
+
+    <script src="repl.lua" type="application/lua" async></script>
+
+</body>
