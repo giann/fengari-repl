@@ -9,5 +9,8 @@
     "fengari": "^0.1.2",
     "fengari-interop": "^0.1.2",
     "fengari-web": "^0.1.2"
+  },
+  "scripts": {
+    "app": "wget -P dist https://github.com/electron/electron/releases/download/v3.0.6/electron-v3.0.6-darwin-x64.zip && unzip dist/electron-v3.0.6-darwin-x64.zip -d dist && mkdir dist/Electron.app/Contents/Resources/app && cp package.json dist/Electron.app/Contents/Resources/app/ && cp -rf src dist/Electron.app/Contents/Resources/app/ && cp -rf node_modules dist/Electron.app/Contents/Resources/app/ && cp icon.icns dist/Electron.app/Contents/Resources/electorn.icns"
   }
 }
