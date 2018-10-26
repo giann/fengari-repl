@@ -95,6 +95,33 @@ local function doREPL()
     triggerEvent(output, "change")
 end
 
+local function historyPrevious()
+    if historyIndex then
+        if historyIndex > 1 then
+            historyIndex = historyIndex - 1
+        end
+    else -- start with more recent history item
+        local hist_len = #history
+        if hist_len > 0 then
+            historyIndex = hist_len
+        end
+    end
+    input.value = history[historyIndex]
+end
+
+local function historyNext()
+    local newvalue = ""
+    if historyIndex then
+        if historyIndex < #history then
+            historyIndex = historyIndex + 1
+            newvalue = history[historyIndex]
+        else -- no longer in history
+            historyIndex = nil
+        end
+    end
+    input.value = newvalue
+end
+
 function input:onkeydown(e)
     if not e then
         e = js.global.event
@@ -106,30 +133,17 @@ function input:onkeydown(e)
         doREPL()
         return false
     elseif key == "ArrowUp" or key == "Up" then
-        if historyIndex then
-            if historyIndex > 1 then
-                historyIndex = historyIndex - 1
-            end
-        else -- start with more recent history item
-            local hist_len = #history
-            if hist_len > 0 then
-                historyIndex = hist_len
-            end
+        local firstNewLine = input.value:find("\n")
+        if not firstNewLine or input.selectionStart < firstNewLine then
+            historyPrevious()
+            return false
         end
-        input.value = history[historyIndex]
-        return false
     elseif key == "ArrowDown" or key == "Down" then
-        local newvalue = ""
-        if historyIndex then
-            if historyIndex < #history then
-                historyIndex = historyIndex + 1
-                newvalue = history[historyIndex]
-            else -- no longer in history
-                historyIndex = nil
-            end
+        local lastNewline = input:len() - input.value:reverse():find("\n")
+        if not lastNewline or input.selectionStart > lastNewline then
+            historyNext()
+            return false
         end
-        input.value = newvalue
-        return false
     elseif key == "l"
         and e.ctrlKey
         and not e.shiftKey
@@ -142,5 +156,7 @@ function input:onkeydown(e)
         return false
     end
 end
+
+input:focus()
 
 _G.print(_G._COPYRIGHT)
