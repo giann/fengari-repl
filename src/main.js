@@ -59,11 +59,15 @@ if (ok === LUA_ERRSYNTAX) {
 }
 if (ok === LUA_OK) {
 	/* Push process.argv[2:] */
-	luaL_checkstack(L, process.argv.length-2, null);
-	for (let i=2; i<process.argv.length; i++) {
-		push(L, process.argv[i]);
+	if (process.argv.length > 2) {
+		luaL_checkstack(L, process.argv.length-2, null);
+		for (let i=2; i<process.argv.length; i++) {
+			push(L, process.argv[i]);
+		}
+		ok = lua_pcall(L, process.argv.length-2, 0, 0);
+	} else {
+		ok = lua_pcall(L, 0, 0, 0);
 	}
-	ok = lua_pcall(L, process.argv.length-2, 0, 0);
 }
 if (ok !== LUA_OK) {
 	let e = tojs(L, -1);
