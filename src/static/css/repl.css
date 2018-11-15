@@ -17,7 +17,7 @@
     position: absolute;
     overflow-y: scroll;
     top: 0;
-    bottom: 35px;
+    bottom: 0;
     left: 0;
     right: 0;
     background: #f8f8f8;
@@ -32,32 +32,18 @@ pre {
     display: block;
 }
 
-.fengari-input-container {
-    display: flex;
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-.fengari-input-container > * {
-    outline: none;
-    border: none;
-    white-space: pre-wrap;
-    font-family: monospace;
-    color: #444;
-    background: #f0f0f0;
-    min-height: 14px; /* minimum one line */
-    padding: 10px;
-    margin: 0;
-    border-radius: 0 0 3px 3px;
-    border-top: 1px solid #ddd;
+#fengari-input::before {
+    content: "→ ";
 }
 
 #fengari-input {
     flex: 1;
     height: 11px; /* start off one line tall */
     padding-left: 0;
+    background: transparent;
+    border: none;
+    margin: 20px 0;
+    outline: none;
 }
 
 #fengari-prompt {

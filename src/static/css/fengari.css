@@ -13,8 +13,8 @@ body {
 }
 
 pre, code, .quoted, #fengari-input, #fengari-prompt {
-    font-family: 'profontwindowsregular';
-    font-size: 13px;
+    font-family: 'Fira Code', 'profontwindowsregular';
+    font-size: 11px;
 }
 
 h1, h2, h3, h4 {

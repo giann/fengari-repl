@@ -12,9 +12,10 @@ local document = js.global.document
 local hljs = js.global.hljs
 
 local output = document:getElementById("fengari-console")
-local prompt = document:getElementById("fengari-prompt")
 local input = document:getElementById("fengari-input")
-assert(output and prompt and input)
+local inputContainer = document:getElementById("fengari-input-container")
+local inputPrefix = document:getElementById("fengari-input-prefix")
+assert(output and input and inputContainer and inputPrefix)
 
 local function triggerEvent(el, type)
     local e = document:createEvent("HTMLEvents")
@@ -26,12 +27,16 @@ local history = {}
 local historyIndex = nil
 local historyLimit = 100
 
+local multilineInstruction
+
+_G._print = _G.print
+
 _G.print = function(...)
     local toprint = pack(...)
 
     local line = document:createElement("pre")
     line.style["white-space"] = "pre-wrap"
-    output:appendChild(line)
+    inputContainer.parentNode:insertBefore(line, inputContainer);
 
     for i = 1, toprint.n do
         if i ~= 1 then
@@ -46,7 +51,7 @@ end
 local function doREPL()
     do
         local line = document:createElement("span")
-        line:appendChild(document:createTextNode(prompt.textContent))
+        line:appendChild(document:createTextNode(multilineInstruction and "... " or "→ "))
         local item = document:createElement("pre")
         item.className = "lua"
         item.style.padding = "0"
@@ -55,8 +60,8 @@ local function doREPL()
         item.textContent = input.value
         hljs:highlightBlock(item)
         line:appendChild(item)
-        output:appendChild(line)
-        output:appendChild(document:createElement("br"))
+        inputContainer.parentNode:insertBefore(line, inputContainer);
+        inputContainer.parentNode:insertBefore(document:createElement("br"), inputContainer);
         output.scrollTop = output.scrollHeight
     end
 
@@ -64,7 +69,8 @@ local function doREPL()
         return
     end
 
-    local line = input.value
+    local line = multilineInstruction and multilineInstruction .. input.value or input.value
+
     if history[#history] ~= line then
         tinsert(history, line)
         if #history > historyLimit then
@@ -78,6 +84,9 @@ local function doREPL()
     end
 
     if fn then
+        inputPrefix.textContent = "→ "
+        multilineInstruction = nil
+
         local results = pack(xpcall(fn, traceback))
         if results[1] then
             if results.n > 1 then
@@ -87,7 +96,13 @@ local function doREPL()
             _G.print(results[2])
         end
     else
-        _G.print(err)
+        -- Syntax error near <eof>
+        if err:match("<eof>") or (err and multilineInstruction) then
+            multilineInstruction = line .. "\n"
+            inputPrefix.textContent = "→> "
+        else
+            _G.print(err)
+        end
     end
 
     input.value = ""
