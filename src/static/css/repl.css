@@ -32,12 +32,9 @@ pre {
     display: block;
 }
 
-#fengari-input::before {
-    content: "→ ";
-}
-
 #fengari-input {
-    flex: 1;
+    display: inline-block;
+    width: 90%;
     height: 11px; /* start off one line tall */
     padding-left: 0;
     background: transparent;
@@ -46,9 +43,8 @@ pre {
     outline: none;
 }
 
-#fengari-prompt {
-    font-weight: bold;
-    padding: 8px 10px;
+#fengari-input-prefix {
+    display: inline-block;
 }
 
 @media screen and (max-width : 800px) {
